@@ -8,15 +8,25 @@ import {
   ScrollView,
   ActivityIndicator,
   FlatList,
+  TextInput,
 } from "react-native";
 
 import React, { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { BlurView } from "expo-blur";
+import { FAB, Portal, Provider } from "react-native-paper";
+import { Video } from "expo-av";
+import cake from "../image_Video/cake_noaudio.mp4";
 
 import axios from "axios";
 
 const HomeScreen = ({ navigation }) => {
+  const [state, setState] = React.useState({ open: false });
+  const onStateChange = ({ open }) => setState({ open });
+  const { open } = state;
+
+  const video = React.useRef(null);
+
   const [trend, setTrend] = useState([]);
   const [cataloge, setCatalog] = useState([]);
 
@@ -105,7 +115,7 @@ const HomeScreen = ({ navigation }) => {
       );
     };
     return (
-      <View style={{ marginTop: 50 }}>
+      <View style={styles.container_trend}>
         <Text style={styles.trend_recipe}>Trending Recipe</Text>
         <FlatList
           horizontal
@@ -144,37 +154,100 @@ const HomeScreen = ({ navigation }) => {
       );
     };
     return (
-      <FlatList
-        data={cataloge}
-        keyExtractor={(item, index) => item.id}
-        renderItem={_renderCataloge}
-        refreshing={loading}
-        onRefresh={_onRefresh}
-      />
+      <SafeAreaView>
+        <FlatList
+          data={cataloge}
+          keyExtractor={(item, index) => item.id}
+          renderItem={_renderCataloge}
+          refreshing={loading}
+          onRefresh={_onRefresh}
+        />
+      </SafeAreaView>
     );
   }
 
-  function Header() {
-    return <View></View>;
-  }
+  // const Header = () => {
+  //   return ( 
+  //     <SafeAreaView>
+  //     <Video
+  //       ref={video}
+  //       source={cake} 
+  //       resizeMode="contain"
+  //       shouldPlay
+  //       isLooping={true}
+  //       style={styles.backgroundVideo}
+  //     /></SafeAreaView>
+  //   );
+  // };
+
+
+
+  const Fab_group = () => {
+    return (
+      <FAB.Group
+      fabStyle = {styles.fabG}
+          open={open}
+          icon={"cupcake"}
+          actions={[
+            {
+              icon: "star",
+              label: "Star",
+              onPress: () => navigation.navigate("Home"),
+            },
+            {
+              icon: "magnify",
+              label: "Seacrh",
+              onPress: () =>  navigation.navigate("Search"),
+            },
+          ]}
+          onStateChange={onStateChange}
+        />
+    )
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        {Header()}
-        {Trend()}
-        {Listcataloges()}
-      </ScrollView>
-    </SafeAreaView>
+    <Provider>
+      <SafeAreaView style={styles.container}>
+      
+        <ScrollView>
+          {/* {Header()} */}
+          {Trend()}
+          {Listcataloges()}
+        </ScrollView>
+        {Fab_group()}
+      </SafeAreaView>
+        
+      <Portal>
+        
+      </Portal>
+    </Provider>
   );
 };
 
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  
+  backgroundVideo: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    width : '100%',
+    height:500,
+  },
+  fabG: {
+    backgroundColor: "#bf2132",
+  },
   container: {
     flex: 1,
     backgroundColor: "#ebe6e7",
+  },
+
+  container_trend:{
+    backgroundColor: "#ebe6e7",
+    marginTop:360,
   },
 
   trend_recipe: {
