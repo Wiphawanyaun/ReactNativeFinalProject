@@ -15,7 +15,7 @@ import {
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Video } from "expo-av";
-// import { BlurView } from '@react-native-community/blur';
+import { BlurView } from '@react-native-community/blur';
 import cake from "../image_Video/cake_noaudio.mp4";
 
 const HomeScreen = ({navigation}) => {
@@ -129,16 +129,16 @@ const HomeScreen = ({navigation}) => {
     );
   }
 
-  // const Blur_trend = ({ item }) => {
-  //   return (
-  //     <BlurView tint="dark" style={styles.blur_contain}>
-  //       <View>
-  //         <Text style={styles.blur_text}>{item.name}</Text>
-  //         <Blur_trend item={item} />
-  //       </View>
-  //     </BlurView>
-  //   );
-  // };
+  const Blur_trend = ({ item }) => {
+    return (
+      <BlurView tint="dark" style={styles.blur_contain}>
+        <View>
+          <Text style={styles.blur_text}>{item.name}</Text>
+          <Blur_trend item={item} />
+        </View>
+      </BlurView>
+    );
+  };
 
   function Listcataloges() {
     const _renderCataloge = ({ item }) => {
