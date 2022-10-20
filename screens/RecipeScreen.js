@@ -11,8 +11,7 @@ import axios from "axios";
 
 const RecipeScreen = ({ navigation, route }) => {
   const { id, name } = route.params;
-
-
+  
   const [recipe, setRecipe] = useState([]);
   const [loading, SetLoading] = useState(false);
   const [error, setError] = useState(null);
