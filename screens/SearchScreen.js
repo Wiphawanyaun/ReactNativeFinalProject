@@ -140,17 +140,27 @@ const SearchScreen = ({ navigation }) => {
     return (
       <SpeedDial
         isOpen={fabopen}
-        icon={{ name: "cake", color: "#fff" }}
-        openIcon={{ name: "close", color: "#fff" }}
+        icon={{ name: "icecream", color: "#fff" }}
+        openIcon={{ name: "icecream", color: "#fff" }}
         onOpen={() => setFabOpen(!fabopen)}
         onClose={() => setFabOpen(!fabopen)}
+        buttonStyle={{ backgroundColor: "#bf2132"}}
       >
         <SpeedDial.Action
           icon={{ name: "home", color: "#fff" }}
           title="Home"
           onPress={() => {
-            navigation.navigate("Home")
+            navigation.navigate("Home"),setFabOpen(!fabopen)
           }}
+          buttonStyle={{ backgroundColor: "#bf2132"}}
+        />
+         <SpeedDial.Action
+          icon={{ name: "login", color: "#fff" }}
+          title="Login"
+          onPress={() => {
+            navigation.navigate("Login"),setFabOpen(!fabopen)
+          }}
+          buttonStyle={{ backgroundColor: "#bf2132"}}
         />
       </SpeedDial>
     );
@@ -174,7 +184,7 @@ export default SearchScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ebe6e7",
+    backgroundColor: '#161616',
   },
   fabG: {
     backgroundColor: "#bf2132",

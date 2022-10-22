@@ -10,21 +10,26 @@ import {
   TextInput,
   Animated,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 
 import { SpeedDial } from "@rneui/themed";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Video } from "expo-av";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import cake from "../image_Video/cake_noaudio.mp4";
 
 const HomeScreen = ({ navigation }) => {
   const [trend, setTrend] = useState([]);
   const [cataloge, setCatalog] = useState([]);
 
-  const [open, setOpen] = React.useState(false);
+  const [fabopen, setFabOpen] = React.useState(false);
 
   const video = React.useRef(null);
+
+  const [favoriteList, setFavoriteList] = useState([]);
 
   const [loading, SetLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -70,8 +75,25 @@ const HomeScreen = ({ navigation }) => {
   }
 
   const _onRefresh = () => {
-    window.location.reload();
     getData();
+  };
+
+  const onFavorite = (restaurant) => {
+    setFavoriteList([...favoriteList, restaurant]);
+    console.log('bkbk',restaurant)
+  };
+  const onRemoveFavorite = (restaurant) => {
+    const filteredList = favoriteList.filter(
+      (item) => item.id !== restaurant.id
+    );
+    setFavoriteList(filteredList);
+  };
+
+  const ifExists = (restaurant) => {
+    if (favoriteList.filter((item) => item.id === restaurant.id).length > 0) {
+      return true;
+    }
+    return false;
   };
 
   const Header = () => {
@@ -149,6 +171,18 @@ const HomeScreen = ({ navigation }) => {
               source={{ uri: item.image }}
               style={styles.image_list}
             />
+            <TouchableOpacity
+              style={styles.icon}
+              onPress={() =>
+                ifExists(item) ? onRemoveFavorite(item) : onFavorite(item)
+              }
+            >
+              <MaterialIcons
+                name={ifExists(item) ? "favorite" : "favorite-outline"}
+                size={32}
+                color={"red"}
+              />
+            </TouchableOpacity>
             <Text style={styles.text_list}>{item.name}</Text>
           </TouchableOpacity>
         </SafeAreaView>
@@ -159,6 +193,7 @@ const HomeScreen = ({ navigation }) => {
         <FlatList
           data={cataloge}
           keyExtractor={(item, index) => item.id}
+          ListHeaderComponent={Trend}
           renderItem={_renderCataloge}
           refreshing={loading}
           onRefresh={_onRefresh}
@@ -170,18 +205,39 @@ const HomeScreen = ({ navigation }) => {
   function fab_g() {
     return (
       <SpeedDial
-        isOpen={open}
-        icon={{ name: "cake", color: "#fff" }}
-        openIcon={{ name: "close", color: "#fff" }}
-        onOpen={() => setOpen(!open)}
-        onClose={() => setOpen(!open)}
+        isOpen={fabopen}
+        icon={{ name: "icecream", color: "#fff" }}
+        openIcon={{ name: "icecream", color: "#fff" }}
+        onOpen={() => setFabOpen(!fabopen)}
+        onClose={() => setFabOpen(!fabopen)}
+        buttonStyle={{ backgroundColor: "#bf2132" }}
       >
+        <SpeedDial.Action
+          icon={{ name: "bookmark", color: "#fff" }}
+          title="BookMark"
+          onPress={() => {
+            navigation.navigate("Bookmark", {
+              favoriteList}),setFabOpen(!fabopen);
+          }}
+          buttonStyle={{ backgroundColor: "#bf2132" }}
+        />
+
         <SpeedDial.Action
           icon={{ name: "search", color: "#fff" }}
           title="Search"
           onPress={() => {
-            navigation.navigate("Search")
+            navigation.navigate("Search"),
+            setFabOpen(!fabopen);
           }}
+          buttonStyle={{ backgroundColor: "#bf2132" }}
+        />
+        <SpeedDial.Action
+          icon={{ name: "login", color: "#fff" }}
+          title="Logout"
+          onPress={() => {
+            navigation.navigate("Login"),setFabOpen(!fabopen);
+          }}
+          buttonStyle={{ backgroundColor: "#bf2132" }}
         />
       </SpeedDial>
     );
@@ -189,11 +245,8 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView>
-      <ScrollView>
         {Header()}
-        {Trend()}
         {Listcataloges()}
-      </ScrollView>
       {fab_g()}
     </SafeAreaView>
   );
@@ -202,20 +255,11 @@ const HomeScreen = ({ navigation }) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  contain_button: {
-    position: "absolute",
-    bottom: 20,
-    right: 20,
-  },
 
-  button: {
-    width: 60,
-    height: 60,
-    shadowRadius: 10,
-    shadowColor: "#f02a4b",
-    shadowOpacity: 0.3,
-    shadowOffset: { height: 10 },
-    backgroundColor: "#f02a4b",
+  icon: {
+    position: 'absolute',
+    top: 10,
+    right: 10
   },
   backgroundVideo: {
     position: "absolute",
@@ -225,9 +269,6 @@ const styles = StyleSheet.create({
     right: 0,
     width: "100%",
     height: 450,
-  },
-  fabG: {
-    backgroundColor: "#bf2132",
   },
   container: {
     flex: 1,
@@ -241,6 +282,7 @@ const styles = StyleSheet.create({
   container_trend: {
     backgroundColor: "#ebe6e7",
     marginTop: 360,
+    borderRadius:15,
   },
 
   trend_recipe: {
