@@ -18,7 +18,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Video } from "expo-av";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useNavigation, useRoute } from "@react-navigation/native";
+
 import cake from "../image_Video/cake_noaudio.mp4";
 
 const HomeScreen = ({ navigation }) => {
@@ -80,7 +80,6 @@ const HomeScreen = ({ navigation }) => {
 
   const onFavorite = (restaurant) => {
     setFavoriteList([...favoriteList, restaurant]);
-    console.log('bkbk',restaurant)
   };
   const onRemoveFavorite = (restaurant) => {
     const filteredList = favoriteList.filter(
@@ -98,16 +97,22 @@ const HomeScreen = ({ navigation }) => {
 
   const Header = () => {
     return (
-      <Video
-        ref={video}
-        source={cake}
-        resizeMode="cover"
-        shouldPlay
-        isLooping={true}
-        style={styles.backgroundVideo}
-        refreshing={loading}
-        onRefresh={_onRefresh}
-      />
+      <SafeAreaView>
+        <TouchableOpacity>
+          <Video
+            ref={video}
+            source={cake}
+            resizeMode="cover"
+            shouldPlay
+            isLooping={true}
+            style={styles.backgroundVideo}
+            refreshing={loading}
+            onRefresh={_onRefresh}
+          />
+        </TouchableOpacity>
+        <Text style={styles.text_video_name}>HI, NAME</Text>
+        <Text style={styles.text_video}>What do you want to make?</Text>
+      </SafeAreaView>
     );
   };
 
@@ -131,14 +136,16 @@ const HomeScreen = ({ navigation }) => {
               // blurRadius={80}
             />
 
-            <Text style={styles.name_trend}>{item.type}</Text>
+            <Text style={styles.name_type}>{item.type}</Text>
+            <Text style ={styles.name_trend}>{item.name}</Text>
+            <Text style ={styles.new}>new</Text>
           </TouchableOpacity>
         </SafeAreaView>
       );
     };
     return (
       <View style={styles.container_trend}>
-        <Text style={styles.trend_recipe}>Trending Recipe</Text>
+        <Text style={styles.trend_recipe}>Today Recipes</Text>
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -148,9 +155,11 @@ const HomeScreen = ({ navigation }) => {
           refreshing={loading}
           onRefresh={_onRefresh}
         />
+
       </View>
     );
   }
+
 
   function Listcataloges() {
     const _renderCataloge = ({ item }) => {
@@ -183,13 +192,17 @@ const HomeScreen = ({ navigation }) => {
                 color={"red"}
               />
             </TouchableOpacity>
-            <Text style={styles.text_list}>{item.name}</Text>
+            <View style ={styles.con_list_detail}>
+            <Text style={styles.text_list_name}>{item.name}</Text>
+            </View>
+           
           </TouchableOpacity>
         </SafeAreaView>
       );
     };
     return (
-      <SafeAreaView>
+      <View >
+         
         <FlatList
           data={cataloge}
           keyExtractor={(item, index) => item.id}
@@ -198,7 +211,9 @@ const HomeScreen = ({ navigation }) => {
           refreshing={loading}
           onRefresh={_onRefresh}
         />
-      </SafeAreaView>
+      
+
+      </View>
     );
   }
 
@@ -213,11 +228,13 @@ const HomeScreen = ({ navigation }) => {
         buttonStyle={{ backgroundColor: "#bf2132" }}
       >
         <SpeedDial.Action
-          icon={{ name: "bookmark", color: "#fff" }}
-          title="BookMark"
+          icon={{ name: "favorite", color: "#fff" }}
+          title="Favorite"
           onPress={() => {
-            navigation.navigate("Bookmark", {
-              favoriteList}),setFabOpen(!fabopen);
+            navigation.navigate("Favorite", {
+              favoriteList,
+            }),
+              setFabOpen(!fabopen);
           }}
           buttonStyle={{ backgroundColor: "#bf2132" }}
         />
@@ -226,8 +243,7 @@ const HomeScreen = ({ navigation }) => {
           icon={{ name: "search", color: "#fff" }}
           title="Search"
           onPress={() => {
-            navigation.navigate("Search"),
-            setFabOpen(!fabopen);
+            navigation.navigate("Search"), setFabOpen(!fabopen);
           }}
           buttonStyle={{ backgroundColor: "#bf2132" }}
         />
@@ -235,7 +251,7 @@ const HomeScreen = ({ navigation }) => {
           icon={{ name: "login", color: "#fff" }}
           title="Logout"
           onPress={() => {
-            navigation.navigate("Login"),setFabOpen(!fabopen);
+            navigation.navigate("Login"), setFabOpen(!fabopen);
           }}
           buttonStyle={{ backgroundColor: "#bf2132" }}
         />
@@ -245,8 +261,8 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView>
-        {Header()}
-        {Listcataloges()}
+      {Header()}
+      {Listcataloges()}
       {fab_g()}
     </SafeAreaView>
   );
@@ -256,39 +272,74 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
 
-  icon: {
-    position: 'absolute',
+  new:{ 
+    position: "absolute",
     top: 10,
-    right: 10
+    left: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    backgroundColor: "red",
+    borderRadius: 15,
+    color: "#ffff",
+  },
+
+  text_video:{
+    position: "absolute",
+    backgroundColor: "rgba(2, 2, 2, 0.7)",
+    top: 80,
+    margin: 10,
+    padding: 10,
+    borderRadius: 15,
+    color :'#ffff',
+   fontSize:20,
+   fontWeight:'bold'
+  },
+
+  text_video_name: {
+    position: "absolute",
+    backgroundColor: "rgba(2, 2, 2, 0.7)",
+    top: 30,
+    margin: 10,
+    padding: 10,
+    borderRadius: 15,
+    color :'#ffff'
+  },
+
+  icon: {
+    position: "absolute",
+    top: 20,
+    right: 20,
   },
   backgroundVideo: {
     position: "absolute",
-    top: -3,
+    top: -60,
     left: 0,
     bottom: 0,
     right: 0,
     width: "100%",
-    height: 450,
+    height: 700,
   },
   container: {
     flex: 1,
-    backgroundColor: "#ebe6e7",
+    backgroundColor: "rgba(2, 2, 2, 0.7)",
   },
   container_cataloge: {
     flex: 1,
     backgroundColor: "#ebe6e7",
+    marginTop: -30,
   },
 
   container_trend: {
-    backgroundColor: "#ebe6e7",
-    marginTop: 360,
-    borderRadius:15,
+    backgroundColor: "rgba(2, 2, 2, 0.9)",
+    marginTop: 400,
+    borderRadius:30,
   },
 
   trend_recipe: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: "bold",
     margin: 10,
+    color:"#fff",
   },
 
   trend: {
@@ -306,50 +357,39 @@ const styles = StyleSheet.create({
 
   image_trend: {
     width: 250,
-    height: 350,
+    height: 300,
     borderRadius: 20,
   },
 
-  name_trend: {
+  name_type: {
     position: "absolute",
-    top: 20,
-    left: 15,
+    top: 10,
+    left: 65,
     paddingHorizontal: 10,
     paddingVertical: 3,
-    backgroundColor: "#bf2132",
+    backgroundColor: "rgba(2, 2, 2, 0.3)",
     borderRadius: 15,
     color: "#ffff",
   },
 
-  blur_contain: {
+  name_trend:{
     position: "absolute",
-    bottom: 10,
-    left: 10,
-    right: 10,
-    height: 100,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    backgroundColor: "#bf2132",
+   bottom:60,
+    margin: 10,
+    left:10,
+    paddingVertical:0,
+    paddingHorizontal:10,
     borderRadius: 15,
+    color :'#ffff',
+   fontSize:20,
+   fontWeight:'bold'
   },
-
-  blur_info: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-
-  blur_text: {
-    width: "80%",
-    color: "#ffff",
-    fontSize: 18,
-    fontWeight: "500",
-  },
-
   image_list: {
-    width: "100%",
+    width: '100%',
     height: 250,
-    marginBottom: 10,
-    borderRadius: 15,
+    borderRadius: 20,
+    marginRight:10,
   },
 
   menu_list: {
@@ -362,13 +402,23 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,
     marginTop: 40,
-    paddingTop: 4,
+    padding: 10,
   },
-
-  text_list: {
+  con_list_detail:{
     backgroundColor: "#ebe6e7",
     padding: 10,
+    marginTop:10,
     marginBottom: 10,
-    fontSize: 30,
+    borderRadius: 20,
   },
+
+  text_list_name: {
+    fontSize: 25,
+    fontWeight:'bold'
+  },
+
+  text_list_detail: {
+    fontSize: 18,
+  },
+
 });

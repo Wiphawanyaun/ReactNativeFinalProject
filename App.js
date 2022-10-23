@@ -8,8 +8,9 @@ import HomeScreen from "./screens/HomeScreen";
 import RecipeScreen from "./screens/RecipeScreen";
 import SearchScreen from "./screens/SearchScreen";
 import LoginScreen from "./screens/LoginScreen";
-import BookMarkScreen from "./screens/BookMarkScreen";
-import SignupScreen from "./screens/SignupScreen";
+import FavoriteScreen from "./screens/FavoriteScreen";
+
+
 
 const Stack = createStackNavigator();
 
@@ -30,18 +31,15 @@ const App = () => {
         <Stack.Screen
           name="Recipe"
           component={RecipeScreen}
-          options={({ route }) => ({ title: route.params.name })}
+          options={{ headerTransparent: true}}
         />
         <Stack.Screen
           name="Search"
           component={SearchScreen}
-          options={{
-            headerShown: false,
-          }}
         />
         <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Bookmark" component={BookMarkScreen} />
-        <Stack.Screen name="Signup" component={SignupScreen} />
+        <Stack.Screen name="Favorite" component={FavoriteScreen}  />
+
 
       </Stack.Navigator>
     </NavigationContainer>

@@ -4,7 +4,7 @@ import {
   View,
   ActivityIndicator,
   FlatList,
-  TouchableOpacityacity,
+  TouchableOpacity,
   Image,
   Animated,
 } from "react-native";
@@ -13,7 +13,6 @@ import axios from "axios";
 
 const RecipeScreen = ({ navigation, route }) => {
   const { id } = route.params;
-
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const [recipe, setRecipe] = useState([]);
@@ -53,42 +52,38 @@ const RecipeScreen = ({ navigation, route }) => {
   const _renderRecipe = ({ item }) => {
     return (
       <View style={styles.contain}>
-        <View>
-          <Animated.Image
+        <Animated.View
+          style={{
+            transform: [
+              {
+                translateY: scrollY.interpolate({
+                  inputRange: [-2, 0, 2],
+                  outputRange: [-0.5, 0, 1.75],
+                }),
+              },
+              {
+                scale: scrollY.interpolate({
+                  inputRange: [-1, 0, 1],
+                  outputRange: [2, 1, 1.0001],
+                }),
+              },
+            ],
+          }}
+        >
+          <Image
             resizeMode="cover"
             source={{ uri: item.image }}
-            style={[
-              styles.image_list,
-              {
-                transform: [
-                  {
-                    translateY: scrollY.interpolate({
-                      inputRange: [-2, 0, 2],
-                      outputRange: [-0.5, 0, 1.75],
-                    }),
-                  },
-                  {
-                    scale: scrollY.interpolate({
-                      inputRange: [-1, 0, 1],
-                      outputRange: [2, 1, 1.0001],
-                    }),
-                  },
-                ],
-              },
-            ]}
+            style={styles.image_list}
           />
-
-          <View style={styles.contain_tex}>
-            <Text style={styles.text_list}>{item.name}</Text>
-            <Text style={styles.text_ingredient}>{item.ingredient}</Text>
-            {/* <View style = {styles.contain_image}>
-            <Image
-              source={require("../icons/salt.png")}
-              resizeMode="contain"
-              style ={styles.icon_image}
-            />
-            </View> */}
+          <View style={styles.bg_image}>
+            <Text style={styles.text_in_image}>{item.name}</Text>
+            <Text style={styles.text_in_detail}>{item.detail}</Text>
           </View>
+        </Animated.View>
+        <View style={styles.contain_text}>
+         
+          <Text style={styles.text_list}>Ingredients</Text>
+          <Text style={styles.text_ingredient}>{item.ingredient}</Text>
         </View>
       </View>
     );
@@ -100,8 +95,6 @@ const RecipeScreen = ({ navigation, route }) => {
         data={recipe}
         keyExtractor={(item, index) => item.id}
         renderItem={_renderRecipe}
-        refreshing={loading}
-        onRefresh={_onRefresh}
         scrollEventThrottle={16}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -123,21 +116,44 @@ const styles = StyleSheet.create({
   contain_image: {
     position: "absolute",
     top: 100,
-    left:20,
-    backgroundColor:"#ebe6e7",
-    padding:5,
-    borderRadius:10,
+    left: 20,
+    backgroundColor: "#ebe6e7",
+    padding: 5,
+    borderRadius: 10,
   },
-   icon_image :{
+  icon_image: {
     width: 45,
     height: 45,
-   },
+  },
 
-  contain_tex: {
+  contain_text: {
     backgroundColor: "#765257",
     borderRadius: 15,
   },
+  bg_image: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: "rgba(2, 2, 2, 0.4)",
+  },
+  text_in_image: {
+    position: "absolute",
+    bottom: 150,
+    color: "#ffff",
+    padding: 10,
+    fontSize:35,
+    fontWeight:'bold'
+  },
+  text_in_detail: {
+    position: "absolute",
+    top:350,
+    color: "#ffff",
+    padding: 10,
+    fontSize:15,
 
+  },
   image_list: {
     width: "100%",
     height: 500,

@@ -9,18 +9,12 @@ import {
   ActivityIndicator,
   FlatList,
 } from "react-native";
-import { SpeedDial } from "@rneui/themed";
-import { SearchBar } from 'react-native-elements';
+import { SearchBar } from "react-native-elements";
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const SearchScreen = ({ navigation }) => {
-  
-  const [state, setState] = React.useState({ open: false });
-  const onStateChange = ({ open }) => setState({ open });
-  const { open } = state;
-
-  const [fabopen, setFabOpen] = React.useState(false);
 
   const [cataloge, setCatalog] = useState([]);
   const [callcataloge, setCallCatalog] = useState([]);
@@ -73,13 +67,12 @@ const SearchScreen = ({ navigation }) => {
 
   function Header() {
     return (
-      <SafeAreaView style ={{marginTop:50}}>
+      <SafeAreaView >
         <SearchBar
           value={searchData}
           placeholder="Search Here"
           onChangeText={(text) => serchFilter(text)}
-          inputContainerStyle ={{borderRadius:50}}
-          
+          inputContainerStyle={{ borderRadius: 50 }}
         />
       </SafeAreaView>
     );
@@ -103,7 +96,7 @@ const SearchScreen = ({ navigation }) => {
   function Listcataloges() {
     const _renderCataloge = ({ item }) => {
       return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={styles.container_cataloge}>
           <TouchableOpacity
             style={styles.menu_list}
             onPress={() => {
@@ -118,13 +111,15 @@ const SearchScreen = ({ navigation }) => {
               source={{ uri: item.image }}
               style={styles.image_list}
             />
-            <Text style={styles.text_list}>{item.name}</Text>
+            <View style={styles.con_list_detail}>
+              <Text style={styles.text_list_name}>{item.name}</Text>
+            </View>
           </TouchableOpacity>
         </SafeAreaView>
       );
     };
     return (
-      <SafeAreaView>
+      <View style={{ marginBottom: 50 }}>
         <FlatList
           data={cataloge}
           keyExtractor={(item, index) => item.id}
@@ -132,50 +127,16 @@ const SearchScreen = ({ navigation }) => {
           refreshing={loading}
           onRefresh={_onRefresh}
         />
-      </SafeAreaView>
+      </View>
     );
   }
 
-  function fab_g() {
-    return (
-      <SpeedDial
-        isOpen={fabopen}
-        icon={{ name: "icecream", color: "#fff" }}
-        openIcon={{ name: "icecream", color: "#fff" }}
-        onOpen={() => setFabOpen(!fabopen)}
-        onClose={() => setFabOpen(!fabopen)}
-        buttonStyle={{ backgroundColor: "#bf2132"}}
-      >
-        <SpeedDial.Action
-          icon={{ name: "home", color: "#fff" }}
-          title="Home"
-          onPress={() => {
-            navigation.navigate("Home"),setFabOpen(!fabopen)
-          }}
-          buttonStyle={{ backgroundColor: "#bf2132"}}
-        />
-         <SpeedDial.Action
-          icon={{ name: "login", color: "#fff" }}
-          title="Login"
-          onPress={() => {
-            navigation.navigate("Login"),setFabOpen(!fabopen)
-          }}
-          buttonStyle={{ backgroundColor: "#bf2132"}}
-        />
-      </SpeedDial>
-    );
-  }
-  
+
   return (
-   
-      <SafeAreaView style={styles.container}>
-        {Header()}
-        {Listcataloges()}
-        {fab_g()}
-      </SafeAreaView>
-
-
-
+    <SafeAreaView style={styles.container}>
+      {Header()}
+      {Listcataloges()}
+    </SafeAreaView>
   );
 };
 
@@ -184,7 +145,17 @@ export default SearchScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#161616',
+    backgroundColor: "#161616",
+  },
+
+  container_cataloge: {
+    flex: 1,
+    backgroundColor: "#ebe6e7",
+  },
+  icon: {
+    position: "absolute",
+    top: 20,
+    right: 20,
   },
   fabG: {
     backgroundColor: "#bf2132",
@@ -204,15 +175,24 @@ const styles = StyleSheet.create({
       height: 3,
     },
     borderRadius: 10,
-    marginBottom: 20,
-    marginTop: 40,
-    paddingTop: 4,
+    marginBottom: 10,
+    marginTop: 20,
+    padding: 10,
   },
-
-  text_list: {
+  con_list_detail: {
     backgroundColor: "#ebe6e7",
     padding: 10,
+
     marginBottom: 10,
-    fontSize: 30,
+    borderRadius: 20,
+  },
+
+  text_list_name: {
+    fontSize: 25,
+    fontWeight: "bold",
+  },
+
+  text_list_detail: {
+    fontSize: 18,
   },
 });
