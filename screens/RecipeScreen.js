@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   Animated,
+  Linking,
 } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
@@ -18,6 +19,7 @@ const RecipeScreen = ({ navigation, route }) => {
   const [recipe, setRecipe] = useState([]);
   const [loading, SetLoading] = useState(false);
   const [error, setError] = useState(null);
+
 
   const getData = async (id) => {
     try {
@@ -77,11 +79,13 @@ const RecipeScreen = ({ navigation, route }) => {
           />
           <View style={styles.bg_image}>
             <Text style={styles.text_in_image}>{item.name}</Text>
+              <ItemSeparatorView/>
             <Text style={styles.text_in_detail}>{item.detail}</Text>
+            <View style={styles.buttonContainer}>
+            </View>
           </View>
         </Animated.View>
         <View style={styles.contain_text}>
-         
           <Text style={styles.text_list}>Ingredients</Text>
           <Text style={styles.text_ingredient}>{item.ingredient}</Text>
         </View>
@@ -107,10 +111,25 @@ const RecipeScreen = ({ navigation, route }) => {
 
 export default RecipeScreen;
 
+const ItemSeparatorView = () => {
+  return (
+    <View 
+      style={{
+        height: 2,
+        width: 340,
+        backgroundColor: "#ebe6e7",
+        position:'absolute',
+        bottom: 150,
+        left:10,
+      }}
+    />
+  );
+};
+
 const styles = StyleSheet.create({
   contain: {
     flex: 1,
-    backgroundColor: "#765257",
+    backgroundColor: "rgba(2, 2, 2, 0.6)",
   },
 
   contain_image: {
@@ -127,8 +146,8 @@ const styles = StyleSheet.create({
   },
 
   contain_text: {
-    backgroundColor: "#765257",
-    borderRadius: 15,
+    backgroundColor: "rgba(2, 2, 2, 0.9)",
+    borderRadius: 25,
   },
   bg_image: {
     position: "absolute",
@@ -143,16 +162,15 @@ const styles = StyleSheet.create({
     bottom: 150,
     color: "#ffff",
     padding: 10,
-    fontSize:35,
-    fontWeight:'bold'
+    fontSize: 35,
+    fontWeight: "bold",
   },
   text_in_detail: {
     position: "absolute",
-    top:350,
+    top: 350,
     color: "#ffff",
     padding: 10,
-    fontSize:15,
-
+    fontSize: 15,
   },
   image_list: {
     width: "100%",
@@ -160,18 +178,18 @@ const styles = StyleSheet.create({
     top: -0,
   },
   text_list: {
-    marginBottom: 10,
     fontSize: 30,
     fontWeight: "700",
-    color: "#ffff",
     padding: 20,
+    paddingBottom:0,
+    color: "#ffff",
   },
 
   text_ingredient: {
-    marginLeft: 80,
+    marginLeft: 20,
     padding: 20,
     fontSize: 20,
-    color: "#ffff",
     marginBottom: 10,
+    color: "#ffff",
   },
 });

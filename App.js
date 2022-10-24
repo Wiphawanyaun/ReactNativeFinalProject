@@ -19,7 +19,9 @@ const App = () => {
     <NavigationContainer
     >
       <Stack.Navigator >
-      
+      <Stack.Screen name="Login" component={LoginScreen}   options={{
+            headerShown: false,
+          }}/>
         <Stack.Screen
           name="Home"
           component={HomeScreen}
@@ -37,8 +39,10 @@ const App = () => {
           name="Search"
           component={SearchScreen}
         />
-        <Stack.Screen name="Login" component={LoginScreen} />
+        
         <Stack.Screen name="Favorite" component={FavoriteScreen}  />
+      
+
 
 
       </Stack.Navigator>

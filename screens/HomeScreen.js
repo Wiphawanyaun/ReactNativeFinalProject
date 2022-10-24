@@ -21,7 +21,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 import cake from "../image_Video/cake_noaudio.mp4";
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation}) => {
+
   const [trend, setTrend] = useState([]);
   const [cataloge, setCatalog] = useState([]);
 
@@ -98,7 +99,7 @@ const HomeScreen = ({ navigation }) => {
   const Header = () => {
     return (
       <SafeAreaView>
-        <TouchableOpacity>
+
           <Video
             ref={video}
             source={cake}
@@ -109,9 +110,10 @@ const HomeScreen = ({ navigation }) => {
             refreshing={loading}
             onRefresh={_onRefresh}
           />
-        </TouchableOpacity>
-        <Text style={styles.text_video_name}>HI, NAME</Text>
+       
+        <Text style={styles.text_video_name}>Hi,My Dear</Text>
         <Text style={styles.text_video}>What do you want to make?</Text>
+
       </SafeAreaView>
     );
   };
@@ -170,8 +172,6 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => {
               navigation.navigate("Recipe", {
                 id: item.id,
-                name: item.name,
-                image: item.image,
               });
             }}
           >
@@ -180,6 +180,7 @@ const HomeScreen = ({ navigation }) => {
               source={{ uri: item.image }}
               style={styles.image_list}
             />
+            <Text style={styles.list_name_type}>{item.type}</Text>
             <TouchableOpacity
               style={styles.icon}
               onPress={() =>
@@ -283,13 +284,15 @@ const styles = StyleSheet.create({
     color: "#ffff",
   },
 
+ 
+
   text_video:{
     position: "absolute",
-    backgroundColor: "rgba(2, 2, 2, 0.7)",
-    top: 80,
+    backgroundColor: "rgba(2, 2, 2, 0.3)",
+    top: 90,
     margin: 10,
     padding: 10,
-    borderRadius: 15,
+    borderRadius: 25,
     color :'#ffff',
    fontSize:20,
    fontWeight:'bold'
@@ -297,12 +300,13 @@ const styles = StyleSheet.create({
 
   text_video_name: {
     position: "absolute",
-    backgroundColor: "rgba(2, 2, 2, 0.7)",
+    backgroundColor: "rgba(2, 2, 2, 0.3)",
     top: 30,
-    margin: 10,
+    margin:10,
     padding: 10,
-    borderRadius: 15,
-    color :'#ffff'
+    borderRadius: 25,
+    color :'#ffff',
+    fontSize:25,
   },
 
   icon: {
@@ -330,7 +334,7 @@ const styles = StyleSheet.create({
   },
 
   container_trend: {
-    backgroundColor: "rgba(2, 2, 2, 0.9)",
+    backgroundColor:  "#ebe6e7",
     marginTop: 400,
     borderRadius:30,
   },
@@ -338,8 +342,7 @@ const styles = StyleSheet.create({
   trend_recipe: {
     fontSize: 25,
     fontWeight: "bold",
-    margin: 10,
-    color:"#fff",
+    margin: 20,
   },
 
   trend: {
@@ -359,6 +362,16 @@ const styles = StyleSheet.create({
     width: 250,
     height: 300,
     borderRadius: 20,
+  },
+  list_name_type:{
+    position: "absolute",
+    top: 20,
+    left: 25,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    backgroundColor: "rgba(2, 2, 2, 0.3)",
+    borderRadius: 15,
+    color: "#ffff",
   },
 
   name_type: {
