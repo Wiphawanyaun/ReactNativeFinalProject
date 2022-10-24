@@ -20,7 +20,6 @@ const RecipeScreen = ({ navigation, route }) => {
   const [loading, SetLoading] = useState(false);
   const [error, setError] = useState(null);
 
-
   const getData = async (id) => {
     try {
       SetLoading(true);
@@ -46,10 +45,6 @@ const RecipeScreen = ({ navigation, route }) => {
       </View>
     );
   }
-
-  const _onRefresh = () => {
-    getData();
-  };
 
   const _renderRecipe = ({ item }) => {
     return (
@@ -79,15 +74,16 @@ const RecipeScreen = ({ navigation, route }) => {
           />
           <View style={styles.bg_image}>
             <Text style={styles.text_in_image}>{item.name}</Text>
-              <ItemSeparatorView/>
+            <ItemSeparatorView />
             <Text style={styles.text_in_detail}>{item.detail}</Text>
-            <View style={styles.buttonContainer}>
-            </View>
+            <Text style={styles.text_in_time}>{item.time}</Text>
           </View>
         </Animated.View>
         <View style={styles.contain_text}>
           <Text style={styles.text_list}>Ingredients</Text>
           <Text style={styles.text_ingredient}>{item.ingredient}</Text>
+          <Text style={styles.text_list}>Tutorial</Text>
+          <Text style={styles.text_tutorial}>{item.tutorial}</Text>
         </View>
       </View>
     );
@@ -113,14 +109,14 @@ export default RecipeScreen;
 
 const ItemSeparatorView = () => {
   return (
-    <View 
+    <View
       style={{
         height: 2,
         width: 340,
         backgroundColor: "#ebe6e7",
-        position:'absolute',
+        position: "absolute",
         bottom: 150,
-        left:10,
+        left: 10,
       }}
     />
   );
@@ -167,10 +163,22 @@ const styles = StyleSheet.create({
   },
   text_in_detail: {
     position: "absolute",
-    top: 350,
+    top: 400,
     color: "#ffff",
     padding: 10,
     fontSize: 15,
+  },
+
+  text_in_time: {
+    position: "absolute",
+    top: 360,
+    color: "#ffff",
+    left: 5,
+    padding: 10,
+    paddingVertical: 8,
+    fontSize: 16,
+    borderRadius: 25,
+    backgroundColor: "rgba(2, 2, 2, 0.2)",
   },
   image_list: {
     width: "100%",
@@ -181,7 +189,14 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "700",
     padding: 20,
-    paddingBottom:0,
+    paddingBottom: 0,
+    color: "#ffff",
+  },
+  text_tutorial: {
+    marginLeft: 20,
+    padding: 20,
+    fontSize: 20,
+    marginBottom: 10,
     color: "#ffff",
   },
 

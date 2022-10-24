@@ -111,6 +111,7 @@ const SearchScreen = ({ navigation }) => {
               source={{ uri: item.image }}
               style={styles.image_list}
             />
+            <Text style={styles.list_name_type}>{item.type}</Text>
             <View style={styles.con_list_detail}>
               <Text style={styles.text_list_name}>{item.name}</Text>
             </View>
@@ -156,6 +157,16 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 20,
     right: 20,
+  },
+  list_name_type:{
+    position: "absolute",
+    top: 20,
+    left: 25,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    backgroundColor: "rgba(2, 2, 2, 0.3)",
+    borderRadius: 15,
+    color: "#ffff",
   },
   fabG: {
     backgroundColor: "#bf2132",

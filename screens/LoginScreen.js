@@ -54,7 +54,9 @@ const styles = StyleSheet.create({
     left: 20,
     fontSize :50,
     fontWeight :'bold',
-    color :'#fff'
+    color :'#fff',
+  
+  
   },
   headertext:{
     position :'absolute',
