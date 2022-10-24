@@ -4,13 +4,9 @@ import {
   View,
   SafeAreaView,
   Image,
-  ScrollView,
   ActivityIndicator,
   FlatList,
-  TextInput,
-  Animated,
   TouchableOpacity,
-  RefreshControl,
 } from "react-native";
 
 import { SpeedDial } from "@rneui/themed";
@@ -423,11 +419,13 @@ const styles = StyleSheet.create({
     marginTop:10,
     marginBottom: 10,
     borderRadius: 20,
+    alignItems:'center'
   },
 
   text_list_name: {
     fontSize: 25,
-    fontWeight:'bold'
+    fontWeight:'bold',
+    color:"#8E1926",
   },
 
   text_list_detail: {

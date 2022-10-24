@@ -5,29 +5,27 @@ import {
   Image,
   TouchableOpacity,
   SafeAreaView,
-
 } from "react-native";
 
-import React, { useState } from "react";
+import React from "react";
 
-const LoginScreen = ({navigation}) => {
-
+const LoginScreen = ({ navigation }) => {
   return (
     <SafeAreaView>
-      <View style ={{flex:1}}>
-      <Image
-        style={styles.bgimage}
-        source={require("../image_Video/loginimage.jpg")}
-      
-      />
-        <Text style ={styles.headertext}>Welcome to</Text>
-        <Text style ={styles.headertextname}>Be Pâtissier</Text>
+      <View style={{ flex: 1 }}>
+        <Image
+          style={styles.bgimage}
+          source={require("../image_Video/loginimage.jpg")}
+        />
+        <Text style={styles.headertext}>Welcome to</Text>
+        <Text style={styles.headertextname}>Be Pâtissier</Text>
         <TouchableOpacity
-          onPress={ () => {navigation.navigate('Home')}}>
-            
-          <Text style ={styles.button_tohome}>Let's start</Text>
+          onPress={() => {
+            navigation.navigate("Home");
+          }}
+        >
+          <Text style={styles.button_tohome}>Let's start</Text>
         </TouchableOpacity>
-       
       </View>
     </SafeAreaView>
   );
@@ -36,36 +34,33 @@ const LoginScreen = ({navigation}) => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  button_tohome :{
-    position :'absolute',
+  button_tohome: {
+    position: "absolute",
     top: 250,
     left: 20,
-    fontSize :25,
-    fontWeight :'bold',
-    color :'#fff',
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "#fff",
     backgroundColor: "rgba(2, 2, 2, 0.3)",
-    padding:10,
-    paddingHorizontal:15,
-    borderRadius:25,
+    padding: 10,
+    paddingHorizontal: 15,
+    borderRadius: 25,
   },
-  headertextname:{
-    position :'absolute',
+  headertextname: {
+    position: "absolute",
     top: 150,
     left: 20,
-    fontSize :50,
-    fontWeight :'bold',
-    color :'#fff',
-  
-  
+    fontSize: 50,
+    fontWeight: "bold",
+    color: "#fff",
   },
-  headertext:{
-    position :'absolute',
+  headertext: {
+    position: "absolute",
     top: 50,
     left: 20,
-    fontSize :60,
-    fontWeight :'bold',
-    color :'#fff',
-    
+    fontSize: 60,
+    fontWeight: "bold",
+    color: "#fff",
   },
 
   bgimage: {

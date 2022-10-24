@@ -3,16 +3,13 @@ import {
   Text,
   View,
   ActivityIndicator,
-  FlatList,
-  TouchableOpacity,
   Image,
   Animated,
-  Linking,
 } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
-const RecipeScreen = ({ navigation, route }) => {
+const RecipeScreen = ({ route }) => {
   const { id } = route.params;
   const scrollY = useRef(new Animated.Value(0)).current;
 

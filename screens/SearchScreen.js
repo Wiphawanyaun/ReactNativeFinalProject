@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Image,
-  ScrollView,
   ActivityIndicator,
   FlatList,
 } from "react-native";
@@ -15,7 +14,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const SearchScreen = ({ navigation }) => {
-
   const [cataloge, setCatalog] = useState([]);
   const [callcataloge, setCallCatalog] = useState([]);
   const [searchData, setSearchData] = useState("");
@@ -67,7 +65,7 @@ const SearchScreen = ({ navigation }) => {
 
   function Header() {
     return (
-      <SafeAreaView >
+      <SafeAreaView>
         <SearchBar
           value={searchData}
           placeholder="Search Here"
@@ -132,7 +130,6 @@ const SearchScreen = ({ navigation }) => {
     );
   }
 
-
   return (
     <SafeAreaView style={styles.container}>
       {Header()}
@@ -158,7 +155,7 @@ const styles = StyleSheet.create({
     top: 20,
     right: 20,
   },
-  list_name_type:{
+  list_name_type: {
     position: "absolute",
     top: 20,
     left: 25,
