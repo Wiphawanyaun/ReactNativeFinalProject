@@ -10,3 +10,6 @@ https://www.figma.com/proto/P6gONHW6r8e15S96T74nDS/Untitled?node-id=229%3A48&sca
 
 Phase 3 :
 [Be Pâtissier.pdf](https://github.com/Wiphawanyaun/ReactNativeFinalProject/files/9854211/Be.Patissier.pdf)
+
+Poster :
+![BePatisierPoster](https://user-images.githubusercontent.com/107971015/197694519-4154aec5-3750-47ac-a828-725d117cb188.png)
